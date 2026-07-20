@@ -302,7 +302,7 @@ async function openRouterFallback(userMessage) {
       return null;
     }
     const reply = data.choices?.[0]?.message?.content?.trim();
-    return reply ? { reply, offers: offers.slice(0, 8) } : null;
+    return { reply: reply || 'O Gemini está indisponível no momento. Estas são as ofertas encontradas pela CotaIA.', offers: offers.slice(0, 8) };
   } catch (error) {
     console.error('Fallback OpenRouter:', error.message);
     return null;
@@ -341,7 +341,7 @@ async function groqFallback(userMessage) {
       return null;
     }
     const reply = data.choices?.[0]?.message?.content?.trim();
-    return reply ? { reply, offers: offers.slice(0, 8) } : null;
+    return { reply: reply || 'O Gemini está indisponível no momento. Estas são as ofertas encontradas pela CotaIA.', offers: offers.slice(0, 8) };
   } catch (error) {
     console.error('Fallback Groq:', error.message);
     return null;

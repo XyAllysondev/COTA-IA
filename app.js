@@ -5,6 +5,15 @@ const summary = document.querySelector('#summary');
 const aiReply = document.querySelector('#ai-reply');
 
 function brl(value) { return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+async function readApiResponse(response) {
+  const text = await response.text();
+  if (!text.trim()) throw new Error('O servidor não retornou uma resposta. Atualize a página e tente novamente.');
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error('A resposta do servidor está inválida. Atualize a página e tente novamente.');
+  }
+}
 function renderOffers(list) {
   offers.innerHTML = '';
   (list || []).forEach((offer, index) => {
@@ -42,7 +51,7 @@ aiForm.addEventListener('submit', async event => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message })
     });
-    const data = await response.json();
+    const data = await readApiResponse(response);
     if (!response.ok) throw new Error(data.error || 'Falha ao falar com a IA.');
     aiReply.textContent = data.reply;
     summary.textContent = data.offers.length ? `${data.offers.length} ofertas consideradas pela IA:` : '';
