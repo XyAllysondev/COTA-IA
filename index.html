@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CotaIA | Cotação inteligente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="hero">
+        <div class="logo"><span>✦</span> CotaIA</div>
+        <p class="eyebrow">AGENTE DE COMPRAS</p>
+        <h1>Encontre o melhor preço,<br /><em>sem perder tempo.</em></h1>
+        <p class="intro">Diga o que você precisa. A CotaIA pesquisa em lojas confiáveis e organiza as melhores opções para você comparar.</p>
+
+        <form id="ai-form" class="ai-box">
+          <label for="ai-input">✦ Peça do seu jeito para a IA</label>
+          <div class="search-row">
+            <input id="ai-input" type="text" placeholder="Ex.: um celular bom até R$ 2000 com boa câmera" required />
+            <button type="submit">Perguntar <span>✦</span></button>
+          </div>
+        </form>
+      </section>
+
+      <section id="results" class="results hidden" aria-live="polite">
+        <div class="results-head">
+          <div><p class="eyebrow">COTAÇÃO ENCONTRADA</p><h2 id="results-title">Melhores ofertas</h2></div>
+          <button class="new-search" type="button" id="reset">Nova busca</button>
+        </div>
+        <div id="ai-reply" class="ai-reply hidden"></div>
+        <div id="summary" class="summary"></div>
+        <div id="offers" class="offers"></div>
+        <p class="notice">As ofertas são pesquisadas pela IA nas fontes configuradas. Confirme estoque, preço e prazo na página da oferta antes de finalizar a compra.</p>
+        <aside class="payment-note"><strong>Pagamentos:</strong> a integração Mercado Pago está disponível no servidor para produtos próprios ou que você intermedeie. Para as ofertas desta cotação, finalize a compra diretamente na loja escolhida.</aside>
+      </section>
+    </main>
+    <template id="offer-template">
+      <article class="offer-card">
+        <div class="store-logo"></div>
+        <div class="offer-info"><p class="store"></p><h3></h3><p class="delivery"></p></div>
+        <div class="price-area"><strong></strong><a target="_blank" rel="noopener">Ver oferta <span>↗</span></a></div>
+      </article>
+    </template>
+    <script src="app.js"></script>
+  </body>
+</html>
