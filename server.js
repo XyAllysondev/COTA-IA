@@ -430,7 +430,7 @@ async function handleAssistant(req, res) {
   }
 }
 
-async function requestHandler(req, res) {
+async function routeRequest(req, res) {
   const url = new URL(req.url, `http://${req.headers.host}`);
   if (req.method === 'POST' && url.pathname === '/api/payments/preference') return createPreference(req, res);
   if (req.method === 'GET' && url.pathname === '/api/search') return searchMercadoLivre(url, res);
@@ -452,6 +452,16 @@ async function requestHandler(req, res) {
   res.writeHead(200, { 'Content-Type': types[path.extname(filePath)] || 'application/octet-stream', 'X-Content-Type-Options': 'nosniff' });
   if (req.method === 'HEAD') return res.end();
   fs.createReadStream(filePath).pipe(res);
+}
+
+async function requestHandler(req, res) {
+  try {
+    return await routeRequest(req, res);
+  } catch (error) {
+    console.error('Erro não tratado na função:', error);
+    if (!res.headersSent) return send(res, 500, { error: 'A função apresentou uma falha interna. Consulte os logs da Vercel para o detalhe.' });
+    res.end();
+  }
 }
 
 // Localmente, mantém o servidor HTTP. Na Vercel, este módulo é importado pelas
