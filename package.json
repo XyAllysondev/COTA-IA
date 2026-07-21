@@ -4,7 +4,7 @@
   "private": true,
   "description": "Agente básico de cotação com checkout Mercado Pago",
   "scripts": {
-    "start": "node server.js"
+    "dev": "node server.js"
   },
   "engines": {
     "node": ">=18"
