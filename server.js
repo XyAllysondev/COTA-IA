@@ -430,7 +430,7 @@ async function handleAssistant(req, res) {
   }
 }
 
-http.createServer(async (req, res) => {
+async function requestHandler(req, res) {
   const url = new URL(req.url, `http://${req.headers.host}`);
   if (req.method === 'POST' && url.pathname === '/api/payments/preference') return createPreference(req, res);
   if (req.method === 'GET' && url.pathname === '/api/search') return searchMercadoLivre(url, res);
@@ -452,4 +452,12 @@ http.createServer(async (req, res) => {
   res.writeHead(200, { 'Content-Type': types[path.extname(filePath)] || 'application/octet-stream', 'X-Content-Type-Options': 'nosniff' });
   if (req.method === 'HEAD') return res.end();
   fs.createReadStream(filePath).pipe(res);
-}).listen(process.env.PORT || 3000, () => console.log('CotaIA em http://localhost:3000'));
+}
+
+// Localmente, mantém o servidor HTTP. Na Vercel, este módulo é importado pelas
+// funções em /api e não deve chamar listen(), pois a plataforma gerencia isso.
+if (require.main === module) {
+  http.createServer(requestHandler).listen(process.env.PORT || 3000, () => console.log('CotaIA em http://localhost:3000'));
+}
+
+module.exports = requestHandler;
